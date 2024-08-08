@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { updateGuest } from "@/app/_lib/actions";
 import SubmitButton from "./SubmitButton";
+import { useFormStatus } from "react-dom";
 
 function UpdateProfileForm({ guest, children }) {
   const [count, setCount] = useState();
@@ -57,9 +58,21 @@ function UpdateProfileForm({ guest, children }) {
       </div>
 
       <div className="flex justify-end items-center gap-6">
-        <SubmitButton pendingLabel="Updating...">Update profile</SubmitButton>
+        <Button />
       </div>
     </form>
+  );
+}
+
+function Button() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+      disabled={pending}
+    >
+      {pending ? "Updateing..." : "Update profile"}
+    </button>
   );
 }
 
